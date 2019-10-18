@@ -6,6 +6,8 @@ public class ActualizarPaisResponse {
      public boolean isOk = false;
     public String message = "";
 
+    public Integer codigopais;
+
 
     
 }

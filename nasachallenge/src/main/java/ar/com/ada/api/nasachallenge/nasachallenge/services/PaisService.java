@@ -51,19 +51,14 @@ public class PaisService {
 
     }
  
-    public String actualizarPais(String nombrepais) throws CodigoPaisException {
-
-        Pais p = p.findById();
+   public Pais updatePais(int id, String nombrepais) {
+        Pais p = new Pais();
         p.setNombrepais(nombrepais);
-        
-
-        
-
+        p.setCodigopais(id);
         repo.save(p);
-
-        return p.getNombrepais();
-
+        return p;
     }
+
 
 
 }

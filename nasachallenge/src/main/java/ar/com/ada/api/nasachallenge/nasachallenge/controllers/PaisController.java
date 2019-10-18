@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.ada.api.nasachallenge.nasachallenge.entities.Pais;
 import ar.com.ada.api.nasachallenge.nasachallenge.excepciones.CodigoPaisException;
-import ar.com.ada.api.nasachallenge.nasachallenge.excepciones.NombrePaisException;
 import ar.com.ada.api.nasachallenge.nasachallenge.models.request.ActualizarPaisRequest;
 import ar.com.ada.api.nasachallenge.nasachallenge.models.request.PaisRequest;
 import ar.com.ada.api.nasachallenge.nasachallenge.models.response.ActualizarPaisResponse;
@@ -60,20 +59,16 @@ public class PaisController {
     }
 
     @PutMapping("/paises/{id}")
-    public ActualizarPaisResponse actualizarPais(@RequestBody ActualizarPaisRequest req) throws NombrePaisException{
-
+    public ActualizarPaisResponse updatePais(@PathVariable int id, @RequestBody ActualizarPaisRequest req){
         ActualizarPaisResponse r = new ActualizarPaisResponse();
 
-        int paisCreadoId = ps.actuallizarPais(req.nombrepais)
+        Pais p = ps.updatePais(id, req.nombrepais);
 
         r.isOk = true;
-        r.message = "País ingresado con éxito";
-
-
+        r.message = "Pais " + req.nombrepais + " actualizado con éxito.";
+        r.codigopais = p.getCodigopais();
         return r;
-
     }
-
 
 
 
