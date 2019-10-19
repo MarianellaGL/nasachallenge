@@ -81,3 +81,5 @@ public class TemperaturaController {
     }
 
 }
+
+//todo funcionando
