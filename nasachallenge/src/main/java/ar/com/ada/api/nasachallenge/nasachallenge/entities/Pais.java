@@ -16,8 +16,8 @@ public class Pais {
 
     @Id
     @Column(name = "codigo_pais")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //identity = autoincremental
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // identity = autoincremental
     public Integer codigopais;
 
     @Column(name = "nombre_pais")
@@ -25,7 +25,6 @@ public class Pais {
 
     @OneToMany(mappedBy = "pais", cascade = CascadeType.ALL)
     public List<Temperatura> temperaturasporpais = new ArrayList<Temperatura>();
-
 
     public Pais(String nombrepais, Integer codigopais) {
         this.nombrepais = nombrepais;
@@ -56,10 +55,8 @@ public class Pais {
         return temperaturasporpais;
     }
 
-   
-
-
-
-
+    public void setTemperaturas(List<Temperatura> temperaturasporpais){
+       this.temperaturasporpais = temperaturasporpais;
+    }
 
 }

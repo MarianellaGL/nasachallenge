@@ -17,31 +17,32 @@ import ar.com.ada.api.nasachallenge.nasachallenge.models.request.PaisRequest;
 import ar.com.ada.api.nasachallenge.nasachallenge.models.response.ActualizarPaisResponse;
 import ar.com.ada.api.nasachallenge.nasachallenge.models.response.PaisResponse;
 import ar.com.ada.api.nasachallenge.nasachallenge.services.PaisService;
+import ar.com.ada.api.nasachallenge.nasachallenge.services.TemperaturaService;
 
 @RestController
 public class PaisController {
 
     @Autowired
     PaisService ps;
-    
+    @Autowired
+    TemperaturaService ts;
 
     @PostMapping("/paises")
-    public PaisResponse postAgregarPais(@RequestBody PaisRequest req) throws CodigoPaisException{
+    public PaisResponse postAgregarPais(@RequestBody PaisRequest req) throws CodigoPaisException {
 
         PaisResponse r = new PaisResponse();
 
-         int paisCreadoId = ps.agregarPais(req.codigopais, req.nombrepais);
+        int paisCreadoId = ps.agregarPais(req.codigopais, req.nombrepais);
 
         r.isOk = true;
         r.message = "País ingresado con éxito";
-
 
         return r;
     }
 
     @GetMapping("/paises")
-    
-    public List<Pais>getPaises(){
+
+    public List<Pais> getPaises() {
 
         List<Pais> lp = ps.getPaises();
 
@@ -49,9 +50,8 @@ public class PaisController {
 
     }
 
-     @GetMapping("/paises/{id}")
-    public Pais getPaisByCodigoPais(@PathVariable Integer id){
-
+    @GetMapping("/paises/{id}")
+    public Pais getPaisByCodigoPais(@PathVariable Integer id) {
 
         Pais p = ps.buscarPorCodigoPais(id);
 
@@ -59,7 +59,7 @@ public class PaisController {
     }
 
     @PutMapping("/paises/{id}")
-    public ActualizarPaisResponse updatePais(@PathVariable int id, @RequestBody ActualizarPaisRequest req){
+    public ActualizarPaisResponse updatePais(@PathVariable int id, @RequestBody ActualizarPaisRequest req) {
         ActualizarPaisResponse r = new ActualizarPaisResponse();
 
         Pais p = ps.updatePais(id, req.nombrepais);
@@ -69,13 +69,4 @@ public class PaisController {
         r.codigopais = p.getCodigopais();
         return r;
     }
-
-
-
-    }
-
-
-
-
-
-
+}

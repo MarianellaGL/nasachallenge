@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.com.ada.api.nasachallenge.nasachallenge.entities.Pais;
+import ar.com.ada.api.nasachallenge.nasachallenge.entities.*;
 import ar.com.ada.api.nasachallenge.nasachallenge.excepciones.CodigoPaisException;
 import ar.com.ada.api.nasachallenge.nasachallenge.repo.PaisRepository;
 
@@ -15,6 +15,7 @@ public class PaisService {
 
     @Autowired
     PaisRepository repo;
+
 
     public void save(Pais p) {
 
@@ -26,32 +27,34 @@ public class PaisService {
         return repo.findAll();
     }
 
-    public Pais buscarPorCodigoPais(Integer id) {
+    public Pais buscarPorCodigoPais(Integer codigopais) {
 
-        Optional<Pais> p = repo.findById(id);
+        Optional<Pais> p = repo.findById(codigopais);
 
         if (p.isPresent())
             return p.get();
         return null;
     }
 
-    
     public int agregarPais(Integer codigopais, String nombrepais) throws CodigoPaisException {
 
         Pais p = new Pais();
         p.setCodigopais(codigopais);
         p.setNombrepais(nombrepais);
-        
 
-        
+        for (Pais pa : repo.findAll()) {
+            if (pa.getCodigopais() == codigopais) {
+                throw new CodigoPaisException("El codigo ingresado ya está assignado, intente nuevamente");
+            }
+        }
 
         repo.save(p);
 
         return p.getCodigopais();
 
     }
- 
-   public Pais updatePais(int id, String nombrepais) {
+
+    public Pais updatePais(int id, String nombrepais) {
         Pais p = new Pais();
         p.setNombrepais(nombrepais);
         p.setCodigopais(id);
@@ -59,6 +62,10 @@ public class PaisService {
         return p;
     }
 
+    public List<Temperatura> getTemperaturasporpais(Integer codigopais) {
 
+        Pais p = this.buscarPorCodigoPais(codigopais);
+        return p.getTemperaturasporpais();
+    }
 
 }
